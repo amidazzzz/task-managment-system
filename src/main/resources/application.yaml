@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: Task Managment System
+
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/taxi-service-db"
+    username: "postgres"
+    password: "123"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
