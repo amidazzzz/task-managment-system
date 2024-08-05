@@ -2,13 +2,11 @@ package org.amida.task_managment_system.user_managment.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Table(name = "t_user")
 public class User {
 
@@ -18,6 +16,9 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
