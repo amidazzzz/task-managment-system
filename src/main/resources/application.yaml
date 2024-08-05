@@ -3,7 +3,7 @@ spring:
     name: Task Managment System
 
   datasource:
-    url: "jdbc:postgresql://localhost:5432/taxi-service-db"
+    url: "jdbc:postgresql://localhost:5432/task-managment-system-db"
     username: "postgres"
     password: "123"
   jpa:
