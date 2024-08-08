@@ -57,10 +57,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/users/register", "/api/users/login", "/api/tasks/create"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/users/register", "/api/users/login",
+                        "/api/tasks/**", "/v3/api-docs/**", "/swagger-ui/**"))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                        .requestMatchers("/api/tasks/create").authenticated()
+                        .requestMatchers("/api/users/register", "/api/users/login",
+                                "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
