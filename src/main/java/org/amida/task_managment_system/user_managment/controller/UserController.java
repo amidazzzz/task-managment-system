@@ -1,12 +1,16 @@
 package org.amida.task_managment_system.user_managment.controller;
 
+import org.amida.task_managment_system.user_managment.config.UserDetailsImpl;
 import org.amida.task_managment_system.user_managment.model.User;
 import org.amida.task_managment_system.user_managment.repository.UserRepository;
+import org.amida.task_managment_system.user_managment.utils.JwtTokenUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +21,15 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtils jwtTokenUtils;
+    private final UserDetailsService userDetailsService;
 
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenUtils jwtTokenUtils, UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtTokenUtils = jwtTokenUtils;
+        this.userDetailsService = userDetailsService;
     }
 
     @PostMapping("/welcome")
@@ -38,12 +46,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody User user) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok("User authenticated successfully");
+    public ResponseEntity<?> authenticate(@RequestBody User user) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
+        } catch (Exception e) {
+            throw new Exception("Incorrect username or password", e);
+        }
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        final String jwt = jwtTokenUtils.generateToken(userDetails);
+
+        return ResponseEntity.ok(jwt);
     }
 
 
