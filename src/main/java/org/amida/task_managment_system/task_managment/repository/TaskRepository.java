@@ -1,4 +1,4 @@
-package org.amida.task_managment_system.repository;
+package org.amida.task_managment_system.task_managment.repository;
 
 import org.amida.task_managment_system.task_managment.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
