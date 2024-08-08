@@ -1,5 +1,7 @@
 package org.amida.task_managment_system.task_managment.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.amida.task_managment_system.task_managment.exception.ResourceNotFoundException;
 import org.amida.task_managment_system.task_managment.model.Comment;
@@ -17,6 +19,8 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    @Operation(summary = "Create a new task")
+    @ApiResponse(responseCode = "200", description = "Task created successfully")
     @PostMapping("/create")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         return ResponseEntity.ok(taskService.createTask(task));

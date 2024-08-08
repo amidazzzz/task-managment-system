@@ -32,7 +32,7 @@ public class UserController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/welcome")
+    @GetMapping("/welcome")
     public String welcome(){
         return "Hello";
     }
