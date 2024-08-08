@@ -1,4 +1,4 @@
-package org.amida.task_managment_system.repository;
+package org.amida.task_managment_system.task_managment.repository;
 
 import org.amida.task_managment_system.task_managment.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByTaskId(Long taskId);
+
+    List<Comment> findByTaskIdAndAuthorId(Long taskId, Long userId);
 }
