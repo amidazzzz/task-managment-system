@@ -41,12 +41,19 @@ docker-compose up --build
 API поддерживает следующие конечные точки:
 
 POST /api/auth/login: Аутентификация пользователя.
+
 POST /api/auth/register: Регистрация пользователя.
+
 POST /api/tasks/create: Создать новую задачу.
+
 PUT /api/tasks/{id}: Обновить существующую задачу.
+
 GET /api/tasks/author/{userId}: Получить все задачи автора с id=userId.
+
 POST /api/tasks/{taskId}: Удалить задачу.
+
 GET /api/tasks/{taskId}/comments: Получить комментарии к задаче.
+
 POST /api/tasks/{taskId}/comments: Добавить комментарии к задаче.
 
 Документация
